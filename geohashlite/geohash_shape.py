@@ -135,4 +135,4 @@ def geojson_2_geohash(feature_collection, precision):
         li_geohash = geohash_shape(geometry_shp, precision)
         geohash_output += li_geohash
 
-    return geohash_output
+    return list(set(geohash_output))
