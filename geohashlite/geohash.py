@@ -14,11 +14,12 @@ __version__ = "0.8.5"
 __all__ = ['encode', 'decode', 'decode_exactly', 'bbox', 'neighbors', 'expand']
 
 _base32 = '0123456789bcdefghjkmnpqrstuvwxyz'
-_base32_map = {}
+_base32_map = dict(zip(_base32, range(len(_base32))))
+# _base32_map = {}
 
-for i in range(len(_base32)):
-    _base32_map[_base32[i]] = i
-del i
+# for i in range(len(_base32)):
+#     _base32_map[_base32[i]] = i
+# del i
 
 LONG_ZERO = 0
 
@@ -133,6 +134,11 @@ def encode(latitude, longitude, precision=12):
 
 
 def _decode_c2i(hashcode):
+
+    # Check if hashcode is a valid geohash code
+    if not set(hashcode).issubset(_base32):
+        raise ValueError("{hash} is not a valid geohash code".format(hash=hashcode))
+
     lon = 0
     lat = 0
     bit_length = 0
@@ -163,13 +169,15 @@ def _decode_c2i(hashcode):
 
         bit_length += 5
 
-    return (lat, lon, lat_length, lon_length)
+    return lat, lon, lat_length, lon_length
 
 
 def decode(hashcode, delta=False):
-    '''
-    decode a hashcode and get center coordinate, and distance between center and outer border
-    '''
+    """
+    decode a hashcode and get center coordinate,
+    and distance between center and outer border
+    """
+
     if _geohash:
         (lat, lon, lat_bits, lon_bits) = _geohash.decode(hashcode)
         latitude_delta = 90.0 / (1 << lat_bits)
