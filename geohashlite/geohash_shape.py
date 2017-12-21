@@ -131,8 +131,39 @@ def geojson_2_geohash(feature_collection, precision):
     geohash_output = []
 
     for feature in feature_collection["features"]:
-        geometry_shp = shape(feature['geometry'])
-        li_geohash = geohash_shape(geometry_shp, precision)
+        li_geohash = geometry_2_geohash(feature['geometry'], precision=precision)
         geohash_output += li_geohash
 
     return list(set(geohash_output))
+
+
+def geometry_2_geohash(geometry, precision):
+    """
+    Convert a geojson geometry to a list of geohash
+
+    :param geometry: geojson geometry
+    :param precision: int, length of geohash
+    :return: list of geohash (length of geohash is defined by precision)
+    """
+    geometry_shp = shape(geometry)
+    li_geohash = geohash_shape(geometry_shp, precision=precision)
+
+    return li_geohash
+
+
+def add_geohash(feature_collection, precision):
+    """
+    For each feature of the geojson FeatureCollection, add the corresponding geohash list
+    to its properties
+
+    :param future_collection: geojson feature collection
+    :param precision: length of the geohash
+    :return:
+    """
+
+    features = feature_collection['features']
+
+    for feature in features:
+        feature['properties']['geohash'] = geometry_2_geohash(feature['geometry'], precision=precision)
+
+    return features
