@@ -158,12 +158,11 @@ def add_geohash(feature_collection, precision):
 
     :param future_collection: geojson feature collection
     :param precision: length of the geohash
-    :return:
+    :return: A geojson FeatureCollection
     """
 
-    features = feature_collection['features']
+    for feature in feature_collection['features']:
+        feature['properties']['geohash'] = geometry_2_geohash(feature['geometry'], 
+                                                              precision=precision)
 
-    for feature in features:
-        feature['properties']['geohash'] = geometry_2_geohash(feature['geometry'], precision=precision)
-
-    return features
+    return feature_collection
