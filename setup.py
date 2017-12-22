@@ -1,5 +1,9 @@
 # coding: utf-8
 
+"""
+Setup.py of geohashlite
+"""
+
 from setuptools import setup
 
 setup(
