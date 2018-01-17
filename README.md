@@ -9,7 +9,7 @@ Clone this repository
 git clone https://github.com/qxzzxq/python-geohash.git
 ```
 
-Then install with python (`virtualenv` is strongly recommended)
+Then install with python
 ```
 cd python-geohash
 python setup.py install
