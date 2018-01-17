@@ -1,6 +1,6 @@
 # Geohash Lite
 
-GeohashLite is a Python package for dealing with geohash code. It support also conversion between GeoJSON 
+GeohashLite is a Python package for dealing with GeoHash code. It support also conversion between GeoJSON 
 and a list of GeoHash.
 
 ## Installation
@@ -41,37 +41,7 @@ geohashlite.geohash_2_geojson(['u09whb7'])
 fc = {
   "type": "FeatureCollection",
   "features": [
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              2.3105621337890625,
-              48.876457644366816
-            ],
-            [
-              2.3263549804687496,
-              48.876457644366816
-            ],
-            [
-              2.3263549804687496,
-              48.88526299769019
-            ],
-            [
-              2.3105621337890625,
-              48.88526299769019
-            ],
-            [
-              2.3105621337890625,
-              48.876457644366816
-            ]
-          ]
-        ]
-      }
-    }
+    "a_GeoJSON_Feature"
   ]
 }
 
