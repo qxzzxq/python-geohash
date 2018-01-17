@@ -90,7 +90,7 @@ def geohash_2_geojson(geohash_list):
     features = []
 
     for hash_code in geohash_list:
-        bbox_geohash = geohash.bbox(hash_code)
+        _box = geohash.bbox(hash_code)
 
         to_append = {
             "type": "Feature",
@@ -101,11 +101,11 @@ def geohash_2_geojson(geohash_list):
                 "type": "Polygon",
                 "coordinates": [
                     [
-                        [bbox_geohash["w"], bbox_geohash["s"]],
-                        [bbox_geohash["e"], bbox_geohash["s"]],
-                        [bbox_geohash["e"], bbox_geohash["n"]],
-                        [bbox_geohash["w"], bbox_geohash["n"]],
-                        [bbox_geohash["w"], bbox_geohash["s"]],
+                        [_box["w"], _box["s"]],
+                        [_box["e"], _box["s"]],
+                        [_box["e"], _box["n"]],
+                        [_box["w"], _box["n"]],
+                        [_box["w"], _box["s"]],
                     ]
                 ]
             }
