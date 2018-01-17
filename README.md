@@ -1,6 +1,7 @@
 # Geohash Lite
 
-GeohashLite is a Python package for dealing with geohash code.
+GeohashLite is a Python package for dealing with geohash code. It support also conversion between GeoJSON 
+and a list of GeoHash.
 
 ## Installation
 Clone this repository
@@ -15,14 +16,13 @@ python setup.py install
 ```
 
 ## Dependencies
-[Shapely]()
+[Shapely](https://pypi.python.org/pypi/Shapely)
 
 ## Usage
-```python
-import geohashlite
-```
+
 **Coordinates encoding**
 ```python
+import geohashlite
 geohashlite.encode(48.86913, 2.32275, 7)
 ```
 
@@ -74,6 +74,7 @@ fc = {
     }
   ]
 }
+
 geohashlite.geojson_2_geohash(fc, precision=7)
 ``` 
 
