@@ -121,6 +121,44 @@ def geohash_2_geojson(geohash_list):
     return feature_collection
 
 
+def geohash_2_multipolygon(geohash_list):
+    """
+    Convert a list of geohash code to a MultiPolygon geometry
+    :param geohash_list:
+    :return: dict
+    {
+        "type": "MultiPolygon",
+        "coordinates": [...]
+    }
+    """
+
+    if not isinstance(geohash_list, list):
+        geohash_list = list(geohash_list)
+
+    coordinates = []
+
+    for hash in geohash_list:
+        _box = geohash.bbox(hash)
+
+        to_append = [
+            [
+                [_box["w"], _box["s"]],
+                [_box["e"], _box["s"]],
+                [_box["e"], _box["n"]],
+                [_box["w"], _box["n"]],
+                [_box["w"], _box["s"]],
+            ]
+        ]
+        coordinates += [to_append]
+
+    output = {
+        "type": "MultiPolygon",
+        "coordinates": coordinates
+    }
+
+    return output
+
+
 def geojson_2_geohash(feature_collection, precision):
     """
     Convert a geojson feature collection to a list of geohash
@@ -162,7 +200,7 @@ def add_geohash(feature_collection, precision):
     """
 
     for feature in feature_collection['features']:
-        feature['properties']['geohash'] = geometry_2_geohash(feature['geometry'], 
+        feature['properties']['geohash'] = geometry_2_geohash(feature['geometry'],
                                                               precision=precision)
 
     return feature_collection
