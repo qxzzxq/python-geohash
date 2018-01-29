@@ -1,4 +1,5 @@
-from shapely.geometry import box, Point, shape
+from shapely.geometry import box, Point, shape, geo
+from shapely.ops import cascaded_union
 
 from . import geohash
 
@@ -157,6 +158,23 @@ def geohash_2_multipolygon(geohash_list):
     }
 
     return output
+
+
+def cascaded_union_geohash(geohash_list):
+    """
+    Calculate the cascaded union
+    :param geohash_list:
+    :return: dict, a geojson gemetry
+    """
+
+    geometry = geohash_2_multipolygon(geohash_list)
+
+    geometry_shp = shape(geometry)
+    polygon_union = cascaded_union(geometry_shp)
+
+    new_geometry = geo.mapping(polygon_union)
+
+    return new_geometry
 
 
 def geojson_2_geohash(feature_collection, precision):
