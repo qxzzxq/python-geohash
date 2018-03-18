@@ -20,11 +20,11 @@ def neighbor(geo_hash, direction):
     return geohash.encode(neighbor_lat, neighbor_lon, len(geo_hash))
 
 
-def geohash_shape(shape, precision, mode='intersect', threshold=None):
+def geohash_shape(shp, precision, mode='intersect', threshold=None):
     """
     Find list of geohashes to cover the shape
-    :param shape: shape to cover
-    :type shape: BaseGeometry
+    :param shp: shape to cover
+    :type shp: BaseGeometry
     :param precision: geohash precision
     :type precision: int
     :param mode: 'intersect' - all geohashes intersect the shape
@@ -37,7 +37,7 @@ def geohash_shape(shape, precision, mode='intersect', threshold=None):
     :return: list of geohashes
     :rtype: list
     """
-    (min_lon, min_lat, max_lon, max_lat) = shape.bounds
+    (min_lon, min_lat, max_lon, max_lat) = shp.bounds
 
     hash_south_west = geohash.encode(min_lat, min_lon, precision)
     hash_north_east = geohash.encode(max_lat, max_lon, precision)
@@ -58,21 +58,21 @@ def geohash_shape(shape, precision, mode='intersect', threshold=None):
             next_hash = neighbor(hash_south_west, [lat, lon])
             if mode == 'center':
                 (lat_center, lon_center) = geohash.decode(next_hash)
-                if shape.contains(Point(lon_center, lat_center)):
+                if shp.contains(Point(lon_center, lat_center)):
                     hash_list.append(next_hash)
             else:
                 next_bbox = geohash.bbox(next_hash)
                 next_bbox_geom = box(next_bbox['w'], next_bbox['s'], next_bbox['e'], next_bbox['n'])
 
                 if mode == 'inside':
-                    if shape.contains(next_bbox_geom):
+                    if shp.contains(next_bbox_geom):
                         hash_list.append(next_hash)
                 elif mode == 'intersect':
-                    if shape.intersects(next_bbox_geom):
+                    if shp.intersects(next_bbox_geom):
                         if threshold is None:
                             hash_list.append(next_hash)
                         else:
-                            intersected_area = shape.intersection(next_bbox_geom).area
+                            intersected_area = shp.intersection(next_bbox_geom).area
                             if (intersected_area / next_bbox_geom.area) >= threshold:
                                 hash_list.append(next_hash)
 
@@ -138,8 +138,8 @@ def geohash_2_multipolygon(geohash_list):
 
     coordinates = []
 
-    for hash in geohash_list:
-        _box = geohash.bbox(hash)
+    for hash_code in geohash_list:
+        _box = geohash.bbox(hash_code)
 
         to_append = [
             [
@@ -212,7 +212,7 @@ def add_geohash(feature_collection, precision):
     For each feature of the geojson FeatureCollection, add the corresponding geohash list
     to its properties
 
-    :param future_collection: geojson feature collection
+    :param feature_collection: geojson feature collection
     :param precision: length of the geohash
     :return: A geojson FeatureCollection
     """
