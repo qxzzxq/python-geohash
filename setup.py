@@ -13,7 +13,7 @@ c1 = Extension('_geohash',
 
 setup(
     name="geohashlite",
-    version="0.3",
+    version="0.3.1",
     author="Xuzhou Qin",
     author_email="me@qinxuzhou.com",
     packages=["geohashlite"],
