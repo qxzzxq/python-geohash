@@ -15,11 +15,6 @@ __all__ = ['encode', 'decode', 'decode_exactly', 'bbox', 'neighbors', 'expand']
 
 _base32 = '0123456789bcdefghjkmnpqrstuvwxyz'
 _base32_map = dict(zip(_base32, range(len(_base32))))
-# _base32_map = {}
-
-# for i in range(len(_base32)):
-#     _base32_map[_base32[i]] = i
-# del i
 
 LONG_ZERO = 0
 
@@ -134,7 +129,6 @@ def encode(latitude, longitude, precision=12):
 
 
 def _decode_c2i(hashcode):
-
     # Check if hashcode is a valid geohash code
     if not set(hashcode).issubset(_base32):
         raise ValueError("{hash} is not a valid geohash code".format(hash=hashcode))
