@@ -31,12 +31,36 @@ geohashlite.encode(48.86913, 2.32275, 7)
 geohashlite.decode('u09whb7')
 ```
 
-**Convert a geohash list to geojson**
+**Conversion between GeoJSON and GeoHash**
+```python
+# GeoHash to GeoJSON
+converter_1 = geohashlite.GeoJsonHasher()
+x = ['u09k', 'u095', 'u08g', 'u09h', 'u09e', 'u097']
+converter_1.geohash_codes = x
+converter_1.decode_geohash(multipolygon=True)
+print(converter_1.geojson)
+
+
+# GeoJSON to GeoHash
+converter_2 = geohashlite.GeoJsonHasher()
+fc = {
+  "type": "FeatureCollection",
+  "features": [
+    "GeoJSON_Feature",
+  ]
+}
+converter_2.geojson = fc
+converter_2.encode_geojson(precision=4)
+print(converter_2.geohash)
+
+```
+
+**Convert a geohash list to geojson (depreciated)**
 ```python
 geohashlite.geohash_2_geojson(['u09whb7'])
 ```
 
-**Convert geojson to a geohash list**
+**Convert geojson to a geohash list (depreciated)**
 ```python
 fc = {
   "type": "FeatureCollection",
