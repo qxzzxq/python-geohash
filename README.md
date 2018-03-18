@@ -51,7 +51,7 @@ fc = {
 }
 converter_2.geojson = fc
 converter_2.encode_geojson(precision=4)
-print(converter_2.geohash)
+print(converter_2.geohash_codes)
 
 ```
 
