@@ -55,12 +55,12 @@ print(converter_2.geohash_codes)
 
 ```
 
-**Convert a geohash list to geojson (depreciated)**
+**Convert a geohash list to geojson (deprecated)**
 ```python
 geohashlite.geohash_2_geojson(['u09whb7'])
 ```
 
-**Convert geojson to a geohash list (depreciated)**
+**Convert geojson to a geohash list (deprecated)**
 ```python
 fc = {
   "type": "FeatureCollection",
